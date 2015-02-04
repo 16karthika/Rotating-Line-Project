@@ -1,0 +1,96 @@
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Rectangle;
+
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+
+public class Display extends JComponent{
+
+	private int width = 400;
+	private int height = 400;
+	
+	private  JFrame frame;
+	 
+	private Rectangle line;
+	
+	public Display(){
+		
+		
+		line = new Rectangle(width/2, height/2	, width,0);
+		
+		
+		;
+		
+//		JPanel controls = new JPanel();
+//		controls.setLayout(new GridBagLayout());
+//		JPanel rotation = new JPanel();
+//		rotation.setLayout(new GridBagLayout());
+//		JLabel rotationSlider = new JLabel("Rotation Speed", JLabel.CENTER);
+//		rotation.add(rotationSlider);
+//		JPanel rotationButtons = new JPanel();
+//		rotationButtons.setLayout(new GridBagLayout());
+        
+	
+	}
+	
+//	public void makeFrame(){
+//		frame = new JFrame();
+//		setTitle("Line Rotation");
+//		setSize(width, height);
+//		JPanel panel = new JPanel();
+//		
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        setVisible(true);
+//	}
+//	public void add(){
+//		JButton start = new JButton("Start");
+//		
+//		
+//	}
+	/*public int findWidth(){
+		return contentPane.getWidth();
+	}*/
+	public void paint(Graphics g){
+		Graphics2D g2 = (Graphics2D) g;
+		//g.fillRect(0,0, 400, 400);
+		g2.setColor(Color.BLUE);
+		g2.draw(line);
+		
+	}
+	
+	//create a method to change the center of the line when screen resized(listeners)
+	public static void main(String[] args) {
+		new Display();
+		JFrame frame = new JFrame();
+		Container contentPane = frame.getContentPane();
+		Display component = new Display();
+		contentPane.add(component);
+		
+		frame.setTitle("Line Rotation");
+		frame.setSize(400, 400);
+		System.out.println(frame);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+		//JButton start = new JButton("Start");
+		//frame.add(start);
+		
+	
+		
+	}
+
+	
+	
+	
+	
+	
+	
+}
