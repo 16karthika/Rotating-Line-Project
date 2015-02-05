@@ -1,6 +1,7 @@
  
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -9,6 +10,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Rectangle;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -17,11 +20,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-public class Display extends JComponent{
+public class Display extends JFrame{
 
 	
 	
-	private JFrame frame;
+	//private JFrame frame;
 	private int width;
 	private int height;
 	private Container contentPane;
@@ -29,12 +32,12 @@ public class Display extends JComponent{
 	
 	public Display(){
 		
-		line = new Rectangle(0, frameHeight()/2, frameWidth(),0);
+		line = new Rectangle(0,50, 50,0);
 		
 		}
 	
-	public void makeJFrame(){
-		frame = new JFrame();
+	/*public void makeJFrame(){
+		//frame = new JFrame();
 		frame.setSize(400,400);
 		frame.setTitle("Line Rotation");
 	}
@@ -50,7 +53,7 @@ public class Display extends JComponent{
 		return frame.getWidth();
 		
 		
-	}
+	}*/
 		
 		
 //		JPanel controls = new JPanel();
@@ -97,13 +100,27 @@ public class Display extends JComponent{
 	
 	//create a method to change the center of the line when screen resized(listeners)
 	public static void main(String[] args) {
-		new Display();
-		JFrame frame = new JFrame();
+		
+	
+		Display frame = new Display();
+		//JFrame frame = new JFrame();
 		JPanel topButtonJPanel = new JPanel(new GridBagLayout());
 		JPanel bottomButtonJPanel = new JPanel(new GridBagLayout());
-		Container contentPane = frame.getContentPane();
-		Display component = new Display();
+		JPanel lineJPanel = new JPanel(new GridBagLayout());
+		/*Container contentPane = frame.getContentPane();
+		Display component = new Display();*/
 		contentPane.add(component);
+		
+		//will cause the things to resize when the display is dragged
+		component.addComponentListener(new ComponentAdapter(){
+			public void componentResized(ComponentEvent event){
+				Component c = (Component)event.getSource();
+				
+			//here type the line that is going to be changed
+			}
+			
+			
+		});
 		
 		
 		
