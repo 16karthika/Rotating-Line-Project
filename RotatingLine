@@ -1,6 +1,6 @@
 
 
-public class RotatingLine {
+public class RotatingLine extends JComponent{
 
 
 
