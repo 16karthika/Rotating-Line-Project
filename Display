@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
@@ -12,6 +13,7 @@ import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -25,10 +27,11 @@ public class Display extends JFrame{
 	
 	
 	//private JFrame frame;
-	private int width;
-	private int height;
+	private int width = 400;
+	private int height = 500;
 	private Container contentPane;
 	private Rectangle line;
+	private GridBagConstraints gbc = new GridBagConstraints();;
 	
 	public Display(){
 		
@@ -70,12 +73,52 @@ public class Display extends JFrame{
 	
 
 
-	//	public void makeFrame(){
-//		frame = new JFrame();
-//		setTitle("Line Rotation");
-//		setSize(width, height);
-//		JPanel panel = new JPanel();
-//		
+	public void makeFrame(){
+		
+		setTitle("Line Rotation");
+		setSize(width, height);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setMinimumSize(new Dimension(400, 400));
+		setVisible(true);
+		
+	}
+	
+	public JPanel makeTopButtonJPanel(){
+		JPanel topButtonJPanel = new JPanel(new GridBagLayout());
+		JButton start = new JButton("Start");
+		JButton stop = new JButton("Stop");
+		topButtonJPanel.add(start,gbc);
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		topButtonJPanel.add(stop, gbc);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		
+		return topButtonJPanel;
+	}
+	
+	public JPanel makeBottomButtonJPanel(){
+		JPanel bottomButtonJPanel = new JPanel(new GridBagLayout());
+		JButton hi = new JButton("Hi");
+		bottomButtonJPanel.add(hi, gbc);
+		
+		return bottomButtonJPanel;
+	}
+	
+	public void resize(){
+		
+		//Display component = new Display();
+		contentPane.addComponentListener(new ComponentAdapter(){
+			public void componentResized(ComponentEvent event){
+				Component c = (Component)event.getSource();
+				System.out.println("Hi");
+				//going to call line.repaint
+			//here type the line that is going to be changed
+			}
+			
+			
+		});
+	}
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //        setVisible(true);
 //	}
@@ -103,49 +146,29 @@ public class Display extends JFrame{
 		
 	
 		Display frame = new Display();
-		//JFrame frame = new JFrame();
-		JPanel topButtonJPanel = new JPanel(new GridBagLayout());
-		JPanel bottomButtonJPanel = new JPanel(new GridBagLayout());
-		JPanel lineJPanel = new JPanel(new GridBagLayout());
-		/*Container contentPane = frame.getContentPane();
-		Display component = new Display();*/
-		contentPane.add(component);
+		Container contentPane = frame.getContentPane();
+		frame.resize();
 		
+		/*//JFrame component = new JFrame();
+		//contentPane.add(component);
+		//frame.add(component);
+		//ComponentListener listener = new ComponentAdapter();
 		//will cause the things to resize when the display is dragged
-		component.addComponentListener(new ComponentAdapter(){
-			public void componentResized(ComponentEvent event){
-				Component c = (Component)event.getSource();
+*/		
 				
-			//here type the line that is going to be changed
-			}
-			
-			
-		});
+
+	
+		JPanel topButtonJPanel = frame.makeTopButtonJPanel();
+		JPanel bottomButtonJPanel = frame.makeBottomButtonJPanel();
+		//have to change this when add a makeLineJPanel method
+		JPanel lineJPanel = new JPanel(new GridBagLayout());
 		
 		
-		
-		frame.setTitle("Line Rotation");
-		frame.setSize(400, 500);
-		//System.out.println(frame);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-		
-		GridBagConstraints gbc = new GridBagConstraints();
-		//gbc.insets = new Insets(10,10,10,10);
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		
-		JButton start = new JButton("Start");
-		JButton stop = new JButton("Stop");
-		topButtonJPanel.add(start,gbc);
-		gbc.gridx = 1;
-		gbc.gridy = 0;
-		topButtonJPanel.add(stop, gbc);
-		gbc.gridx = 0;
-		gbc.gridy = 0;
 		
 		
 		frame.add(topButtonJPanel, BorderLayout.NORTH);
+		frame.add(lineJPanel, BorderLayout.CENTER);
+		frame.add(bottomButtonJPanel, BorderLayout.SOUTH);
 		
 	
 		
