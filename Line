@@ -1,32 +1,25 @@
 public class Line {
+	
+	private double angle;
+	
+	public Line(double angle) {
+		this.angle = angle;
+	}
+	
+	public Line() {
+		angle = 0;
+	}
 
-public static final int maxFrameLength = 600; // Figure out what this is later
+	public double getAngle() {
+		return angle;
+	}
 
-private final int length = maxFrameLength;
-private double angle;
-
-public Line(double angle) {
-    this.angle = angle;
-}
-
-public Line() {
-    angle = 0;
-}
-
-public double getAngle() {
-    return angle;
-}
-
-public void setAngle(double angle) {
-    this.angle = angle;
-}
-
-public int getLength() {
-    return length;
-}
-
-public void rotate(double angle) {
-    this.angle += angle;
-}
+	public void setAngle(double angle) {
+		this.angle = angle;
+	}
+	
+	public void rotate(double angle) {
+		this.angle += angle;
+	}
 
 }
