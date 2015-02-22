@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -50,8 +51,18 @@ public class Display{
 				}
 			}
 		}
-		
 		ActionListener startStop = new StartStopListener();
+		
+		class LineColorListener implements ActionListener{
+			Random r = new Random();
+			public void actionPerformed(ActionEvent event){
+				if(changeLineColorButton******)
+				line.changeColor(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
+			}
+		}
+
+		
+		
 		startStopButton.addActionListener(startStop);
 		startStopButton.setBounds(0, 0, 150, 50);
 		myFrame.getContentPane().setLayout(new BorderLayout());
