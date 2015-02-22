@@ -35,14 +35,13 @@ public class Display {
 
 			public void actionPerformed(ActionEvent event) {
 
-				line.rotate(0.001);
+				line.rotate(0.02);
 			}
 		}
 		
 		ActionListener listener = new TimerListener();
-		final int DELAY = 1; 
+		final int DELAY = 30; 
 		final Timer timer = new Timer(DELAY, listener);
-		timer.start();
 		class StartStopListener implements ActionListener{
 			public void actionPerformed(ActionEvent event){
 				if (startStopButton.getText().equals("Start"))
