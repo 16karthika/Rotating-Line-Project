@@ -1,39 +1,33 @@
 import javax.swing.JComponent;
-
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class RotatingLine extends JComponent{
 	
 	private static final Line line = new Line();
 	private JFrame frame;
+	private Color color;
 	
 	public RotatingLine(JFrame frame) {
 		this.frame = frame;
 	}
 
+	public void changeColor(Color color) {
+		this.color = color;
+	}
+	
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		
 		g2.setBackground(Color.LIGHT_GRAY);
 		g2.clearRect(0, 0, frame.getContentPane().getWidth(), frame.getContentPane().getHeight());
 		
-		g2.setColor(Color.BLUE);
+		g2.setColor(color);
 		
 		double smallerAngle = line.getAngle() % Math.PI; // Convert the line's rotation into something less than pi radians
 		int centerX = frame.getContentPane().getWidth() / 2;
@@ -61,14 +55,10 @@ public class RotatingLine extends JComponent{
 	}
 	
 	public void rotate(double angle) {
-		
 		line.rotate(angle);
 		repaint();
-		
 	}
-	
-	// This is just for my own testing
-	
+		
 	public static void main(String[] args) {
 		
 		JFrame frame = new JFrame();
@@ -79,7 +69,7 @@ public class RotatingLine extends JComponent{
 
 			public void actionPerformed(ActionEvent event) {
 
-				line.rotate(0.001);
+				line.rotate(0.02);
 			}
 		}
 		
@@ -90,7 +80,7 @@ public class RotatingLine extends JComponent{
 		
 		ActionListener listener = new TimerListener();
 
-		final int DELAY = 1; // Milliseconds between timer increments
+		final int DELAY = 30;
 		Timer t = new Timer(DELAY, listener);
 		t.start();
 	}	
