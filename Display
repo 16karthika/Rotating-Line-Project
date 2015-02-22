@@ -27,6 +27,7 @@ public class Display{
 		JFrame myFrame = makeFrame();
 		final RotatingLine line = new RotatingLine(myFrame);
 		final JButton startStopButton = new JButton("Start");
+		final JButton changeLineColorButton = new JButton("Change Color");
 		class TimerListener implements ActionListener {
 			public void actionPerformed(ActionEvent event) {
 				line.rotate(.02);
@@ -56,17 +57,20 @@ public class Display{
 		class LineColorListener implements ActionListener{
 			Random r = new Random();
 			public void actionPerformed(ActionEvent event){
-				if(changeLineColorButton******)
 				line.changeColor(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
 			}
 		}
+		ActionListener changeLineColor = new LineColorListener();
 
 		
 		
 		startStopButton.addActionListener(startStop);
 		startStopButton.setBounds(0, 0, 150, 50);
+		changeLineColorButton.addActionListener(changeLineColor);
+		changeLineColorButton.setBounds(150, 0, 150, 50);
 		myFrame.getContentPane().setLayout(new BorderLayout());
 		myFrame.getContentPane().add(startStopButton);
+		myFrame.getContentPane().add(changeLineColorButton);
 		myFrame.getContentPane().add(line);
 		
 		line.repaint();
