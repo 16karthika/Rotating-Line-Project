@@ -10,47 +10,41 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-public class Display {
-//	private static double width;
-//	private static double height;
-//	
-	public static void main(String[]args)
-	{
+public class Visual{
+	
+	public static JFrame makeFrame(){
 		
 		final JFrame frame = new JFrame();	
-		
-//		width = frame.getSize().getWidth();
-//		height = frame.getSize().getHeight();
 		frame.setTitle("Rotating Line");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setMinimumSize(new Dimension(500, 500));
-		final RotatingLine line = new RotatingLine(frame);
+		return frame;
+	}
+	
+	public static void setUp(){
 		
-		
-		//initializing the button
+		JFrame myFrame = makeFrame();
+		final RotatingLine line = new RotatingLine(myFrame);
 		final JButton startStopButton = new JButton("Start");
-		
-
 		class TimerListener implements ActionListener {
-
 			public void actionPerformed(ActionEvent event) {
-
-				line.rotate(0.02);
+				line.rotate(.02);
 			}
 		}
 		
 		ActionListener listener = new TimerListener();
 		final int DELAY = 30; 
 		final Timer timer = new Timer(DELAY, listener);
+		
 		class StartStopListener implements ActionListener{
 			public void actionPerformed(ActionEvent event){
-				if (startStopButton.getText().equals("Start"))
-				{
+				if (startStopButton.getText().equals("Start")){
+					
 					startStopButton.setText("Stop");
 					timer.start();
 				}
-				else
-				{
+				else{
+					
 					timer.stop();
 					startStopButton.setText("Start");
 				}
@@ -60,11 +54,19 @@ public class Display {
 		ActionListener startStop = new StartStopListener();
 		startStopButton.addActionListener(startStop);
 		startStopButton.setBounds(0, 0, 150, 50);
-		frame.getContentPane().setLayout(new BorderLayout());
-		frame.getContentPane().add(startStopButton);
-		frame.getContentPane().add(line);
+		myFrame.getContentPane().setLayout(new BorderLayout());
+		myFrame.getContentPane().add(startStopButton);
+		myFrame.getContentPane().add(line);
 		
 		line.repaint();
-		frame.setVisible(true);
-	}	
+		myFrame.setVisible(true);
+		
+	}
+	
+	public static void main(String[]args)
+	{
+		setUp();
+	}
+	
+		
 }
