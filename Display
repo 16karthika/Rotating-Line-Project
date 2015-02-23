@@ -10,13 +10,13 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 
 public class Display{
-	
+	private static double increment = .02;
 	public static JFrame makeFrame(){
 		
 		final JFrame frame = new JFrame();	
 		frame.setTitle("Rotating Line");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setMinimumSize(new Dimension(500, 500));
+		frame.setMinimumSize(new Dimension(900, 900));
 		return frame;
 	}
 	
@@ -25,13 +25,14 @@ public class Display{
 		final JFrame myFrame = makeFrame();
 		final RotatingLine line = new RotatingLine(myFrame);
 		final JButton startStopButton = new JButton("Start");
+		final JButton changeDirectionButton = new JButton("Change to Clockwise");
 		final JButton changeLineColorButton = new JButton("Change Line Color");
 		final JButton changeBackgroundColorButton = new JButton("Change Background Color");
 		final JButton defaultColors = new JButton("Return to Default");
 		
 		class TimerListener implements ActionListener {
 			public void actionPerformed(ActionEvent event) {
-				line.rotate(.02);
+				line.rotate(increment);
 			}
 		}
 		
@@ -54,6 +55,23 @@ public class Display{
 			}
 		}
 		ActionListener startStop = new StartStopListener();
+		
+		class ChangeDirectionListener implements ActionListener{
+			public void actionPerformed(ActionEvent event){
+				if (changeDirectionButton.getText().equals("Change to Clockwise")){
+					
+					changeDirectionButton.setText("Change to Counterclockwise");
+					increment = -increment;
+					
+				}
+				else{
+					increment = -increment;
+					changeDirectionButton.setText("Change to Clockwise");
+				}
+			}
+		}
+		
+		ActionListener changeDirection = new ChangeDirectionListener();
 		
 		class LineColorListener implements ActionListener{
 			Random r = new Random();
@@ -89,12 +107,15 @@ public class Display{
 		changeLineColorButton.setBounds(150, 0, 150, 50);
 		changeBackgroundColorButton.addActionListener(changeBackgroundColor);
 		changeBackgroundColorButton.setBounds(300, 0, 200, 50);
+		changeDirectionButton.addActionListener(changeDirection);
+		changeDirectionButton.setBounds(500, 0, 200, 50);
 		defaultColors.addActionListener(defaultReturn);
-		defaultColors.setBounds(500, 0, 200, 50);
+		defaultColors.setBounds(700, 0, 200, 50);
 		myFrame.getContentPane().setLayout(new BorderLayout());
 		myFrame.getContentPane().add(startStopButton);
 		myFrame.getContentPane().add(changeLineColorButton);
 		myFrame.getContentPane().add(changeBackgroundColorButton);
+		myFrame.getContentPane().add(changeDirectionButton);
 		myFrame.getContentPane().add(defaultColors);
 		myFrame.getContentPane().add(line);
 		
