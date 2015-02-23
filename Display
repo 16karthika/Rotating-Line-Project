@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 
 public class Display{
-	private static double increment = .04;
+	private static double increment = -.04;
 	public static JFrame makeFrame(){
 		
 		final JFrame frame = new JFrame();	
@@ -25,7 +25,7 @@ public class Display{
 		final JFrame myFrame = makeFrame();
 		final RotatingLine line = new RotatingLine(myFrame);
 		final JButton startStopButton = new JButton("Start");
-		final JButton changeDirectionButton = new JButton("Change to Clockwise");
+		final JButton changeDirectionButton = new JButton("Change to Counterclockwise");
 		final JButton changeLineColorButton = new JButton("Change Line Color");
 		final JButton changeBackgroundColorButton = new JButton("Change Background Color");
 		final JButton defaultColors = new JButton("Default Colors");
