@@ -27,6 +27,7 @@ public class Display{
 		final JButton startStopButton = new JButton("Start");
 		final JButton changeLineColorButton = new JButton("Change Line Color");
 		final JButton changeBackgroundColorButton = new JButton("Change Background Color");
+		final JButton defaultColors = new JButton("Return to Default");
 		
 		class TimerListener implements ActionListener {
 			public void actionPerformed(ActionEvent event) {
@@ -73,16 +74,28 @@ public class Display{
 		}
 		ActionListener changeBackgroundColor = new BackgroundColorListener();
 		
+		class DefaultColorListener implements ActionListener{
+			public void actionPerformed(ActionEvent event) {
+				line.changeBackgroundColor(Color.BLACK);
+				line.changeLineColor(Color.WHITE);
+				myFrame.repaint();
+			}
+		}
+		ActionListener defaultReturn = new DefaultColorListener();
+		
 		startStopButton.addActionListener(startStop);
 		startStopButton.setBounds(0, 0, 150, 50);
 		changeLineColorButton.addActionListener(changeLineColor);
 		changeLineColorButton.setBounds(150, 0, 150, 50);
 		changeBackgroundColorButton.addActionListener(changeBackgroundColor);
 		changeBackgroundColorButton.setBounds(300, 0, 200, 50);
+		defaultColors.addActionListener(defaultReturn);
+		defaultColors.setBounds(500, 0, 200, 50);
 		myFrame.getContentPane().setLayout(new BorderLayout());
 		myFrame.getContentPane().add(startStopButton);
 		myFrame.getContentPane().add(changeLineColorButton);
 		myFrame.getContentPane().add(changeBackgroundColorButton);
+		myFrame.getContentPane().add(defaultColors);
 		myFrame.getContentPane().add(line);
 		
 		line.repaint();
