@@ -11,23 +11,28 @@ public class RotatingLine extends JComponent{
 	
 	private static final Line line = new Line();
 	private JFrame frame;
-	private Color color;
+	private Color lineColor;
+	private Color backgroundColor;
 	
 	public RotatingLine(JFrame frame) {
 		this.frame = frame;
 	}
 
-	public void changeColor(Color color) {
-		this.color = color;
+	public void changeLineColor(Color lineColor) {
+		this.lineColor = lineColor;
+	}
+	
+	public void changeBackgroundColor(Color backgroundColor){
+		this.backgroundColor = backgroundColor;
 	}
 	
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		
-		g2.setBackground(Color.LIGHT_GRAY);
+		g2.setBackground(backgroundColor);
 		g2.clearRect(0, 0, frame.getContentPane().getWidth(), frame.getContentPane().getHeight());
 		
-		g2.setColor(color);
+		g2.setColor(lineColor);
 		
 		double smallerAngle = line.getAngle() % Math.PI; // Convert the line's rotation into something less than pi radians
 		int centerX = frame.getContentPane().getWidth() / 2;
