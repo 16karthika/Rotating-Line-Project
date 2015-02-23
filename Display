@@ -3,10 +3,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.util.Random;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.Timer;
@@ -54,16 +51,14 @@ public class Display{
 		}
 		ActionListener startStop = new StartStopListener();
 		
-		class LineColorListener implements ActionListener{
+		class LineColorListener implements ActionListener {
 			Random r = new Random();
-			public void actionPerformed(ActionEvent event){
+			public void actionPerformed(ActionEvent event) {
 				line.changeColor(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
 			}
 		}
 		ActionListener changeLineColor = new LineColorListener();
 
-		
-		
 		startStopButton.addActionListener(startStop);
 		startStopButton.setBounds(0, 0, 150, 50);
 		changeLineColorButton.addActionListener(changeLineColor);
@@ -75,13 +70,9 @@ public class Display{
 		
 		line.repaint();
 		myFrame.setVisible(true);
-		
 	}
 	
-	public static void main(String[]args)
-	{
+	public static void main(String[]args) {
 		setUp();
-	}
-	
-		
+	}	
 }
