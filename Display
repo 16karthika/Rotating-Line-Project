@@ -125,7 +125,6 @@ public class Display{
 		myFrame.getContentPane().add(defaultColors);
 		myFrame.getContentPane().add(line);
 		
-		line.repaint();
 		myFrame.setVisible(true);
 		
 	}
