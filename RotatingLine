@@ -11,7 +11,7 @@ public class RotatingLine extends JComponent{
 	
 	private static final Line line = new Line();
 	private JFrame frame;
-	private Color lineColor;
+	private Color lineColor = Color.WHITE;
 	private Color backgroundColor;
 	
 	public RotatingLine(JFrame frame) {
