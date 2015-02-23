@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 
 public class Display{
-	private static double increment = .02;
+	private static double increment = .04;
 	public static JFrame makeFrame(){
 		
 		final JFrame frame = new JFrame();	
@@ -81,7 +81,13 @@ public class Display{
 			}
 		}
 		ActionListener changeLineColor = new LineColorListener();
-
+		
+		
+		/*class changeRotateSpeedListener implements ActionListener{
+			public void actionPerformed(ActionEvent event){
+				increment =
+			}
+		}*/
 		class BackgroundColorListener implements ActionListener{
 			Random r2 = new Random();
 			public void actionPerformed(ActionEvent event){
