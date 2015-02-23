@@ -28,7 +28,7 @@ public class Display{
 		final JButton changeDirectionButton = new JButton("Change to Clockwise");
 		final JButton changeLineColorButton = new JButton("Change Line Color");
 		final JButton changeBackgroundColorButton = new JButton("Change Background Color");
-		final JButton defaultColors = new JButton("Return to Default");
+		final JButton defaultColors = new JButton("Default Colors");
 		
 		class TimerListener implements ActionListener {
 			public void actionPerformed(ActionEvent event) {
@@ -102,6 +102,7 @@ public class Display{
 			public void actionPerformed(ActionEvent event) {
 				line.changeBackgroundColor(Color.BLACK);
 				line.changeLineColor(Color.WHITE);
+				
 				myFrame.repaint();
 			}
 		}
