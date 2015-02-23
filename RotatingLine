@@ -40,21 +40,21 @@ public class RotatingLine extends JComponent{
 		
 		if (smallerAngle >= 0 && smallerAngle < Math.PI / 4) {
 			g2.drawLine((int) (centerX - centerY * Math.tan(smallerAngle)), 0, centerX, centerY);
-			g2.drawLine(centerX, centerY, (int) (centerX + centerY * Math.tan(smallerAngle)), frame.getContentPane().getHeight());
+			g2.drawLine(centerX, centerY, (int) (centerX + centerY * Math.tan(smallerAngle)), 2 * centerY);
 		}
 		else if (smallerAngle == Math.PI / 4) {
-			g2.drawLine(0, 0, frame.getContentPane().getWidth(), frame.getContentPane().getHeight());
+			g2.drawLine(0, 0, 2 * centerX, 2 * centerY);
 		}
 		else if (smallerAngle > Math.PI / 4 && smallerAngle < 3 * Math.PI / 4) {
 			double complement = Math.PI / 2 - smallerAngle;
 			g2.drawLine(0, (int) (centerY - centerX * Math.tan(complement)), centerX, centerY);
-			g2.drawLine(centerX, centerY, frame.getContentPane().getWidth(), (int) (frame.getContentPane().getHeight() - centerY + centerX * Math.tan(complement)));
+			g2.drawLine(centerX, centerY, 2 * centerX, (int) (frame.getContentPane().getHeight() - centerY + centerX * Math.tan(complement)));
 		}
 		else if (smallerAngle == 3 * Math.PI / 4) {
-			g2.drawLine(0, frame.getContentPane().getHeight(), frame.getContentPane().getWidth(), 0);
+			g2.drawLine(0, 2 * centerY, 2 * centerX, 0);
 		} else {
 			double supplement = Math.PI - smallerAngle;
-			g2.drawLine((int) (centerX - centerY * Math.tan(supplement)), frame.getContentPane().getHeight(), centerX, centerY);
+			g2.drawLine((int) (centerX - centerY * Math.tan(supplement)), 2 * centerY, centerX, centerY);
 			g2.drawLine(centerX, centerY, (int) (centerX + centerY * Math.tan(supplement)), 0);
 		}	
 	}
