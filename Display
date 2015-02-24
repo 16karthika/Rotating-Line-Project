@@ -7,7 +7,10 @@ import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JSlider;
 import javax.swing.Timer;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class Display{
 	private static double increment = -.04;
@@ -124,7 +127,22 @@ public class Display{
 		
 	}
 	
-	
+	public static void makeSpeedSlider(final JFrame myFrame, final RotatingLine myLine){
+		final JSlider speedSlider = new JSlider(JSlider.VERTICAL,-50,50,0);
+		
+		
+		class SpeedListener implements ChangeListener{
+			public void stateChanged(ChangeEvent e){
+				increment+=((speedSlider.getValue()));
+				//myFrame.repaint();
+				
+			}
+		}
+		ChangeListener speed = new SpeedListener();
+		speedSlider.addChangeListener(speed);
+		speedSlider.setBounds(0,50,50,300);
+		myFrame.getContentPane().add(speedSlider);
+	}
 	public static void setUp(){
 		
 		final JFrame myFrame = makeFrame();
@@ -134,7 +152,7 @@ public class Display{
 		makeLineColorButton(myFrame, line);
 		makeBackgroundColorButton(myFrame, line);
 		makeDefaultColorsButton(myFrame, line);
-		
+		makeSpeedSlider(myFrame, line);
 
 		myFrame.getContentPane().setLayout(new BorderLayout());
 		myFrame.getContentPane().add(line);
