@@ -20,10 +20,6 @@ public class Display{
 		return frame;
 	}
 	
-	public static RotatingLine makeRotLine(JFrame frame){
-		return new RotatingLine(frame);
-	}
-	
 	
 	public static void makeStartStopButton(final JFrame myFrame, final RotatingLine myLine){
 		final JButton startStopButton = new JButton("Start");
