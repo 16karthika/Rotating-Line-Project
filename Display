@@ -4,15 +4,14 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-public class Display{
+public class Display {
 	private static double increment = -.04;
-	public static JFrame makeFrame(){
-		
+	
+	public static JFrame makeFrame() {
 		final JFrame frame = new JFrame();	
 		frame.setTitle("Rotating Line");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -20,128 +19,104 @@ public class Display{
 		return frame;
 	}
 	
-	
-	public static void makeStartStopButton(final JFrame myFrame, final RotatingLine myLine){
+	public static void setUp() {
+		final JFrame myFrame = makeFrame();
+		final RotatingLine line = new RotatingLine(myFrame);
 		final JButton startStopButton = new JButton("Start");
+		final JButton changeDirectionButton = new JButton("Counterclockwise");
+		final JButton changeLineColorButton = new JButton("Change Line Color");
+		final JButton changeBackgroundColorButton = new JButton("Change Background Color");
+		final JButton defaultColors = new JButton("Default Colors");
 		
 		class TimerListener implements ActionListener {
 			public void actionPerformed(ActionEvent event) {
-				myLine.rotate(increment);
+				line.rotate(increment);
 			}
 		}
+		
 		ActionListener listener = new TimerListener();
 		final int DELAY = 30; 
 		final Timer timer = new Timer(DELAY, listener);
-		class StartStopListener implements ActionListener{
-			public void actionPerformed(ActionEvent event){
-				if (startStopButton.getText().equals("Start")){
+		
+		class StartStopListener implements ActionListener {
+			public void actionPerformed(ActionEvent event) {
+				if (startStopButton.getText().equals("Start")) {
 					startStopButton.setText("Stop");
 					timer.start();
-				}
-				else{
+				} else {
 					timer.stop();
 					startStopButton.setText("Start");
 				}
 			}
 		}
+		
 		ActionListener startStop = new StartStopListener();
-		startStopButton.addActionListener(startStop);
-		startStopButton.setBounds(0, 0, 150, 50);
-		myFrame.getContentPane().add(startStopButton);	
-	}
-	
-	
-	public static void makeChangeDirectionButton(final JFrame myFrame, final RotatingLine myLine){
-		final JButton changeDirectionButton = new JButton("Change to Counterclockwise");
-		class ChangeDirectionListener implements ActionListener{
-			public void actionPerformed(ActionEvent event){
-				if (changeDirectionButton.getText().equals("Change to Clockwise")){
-					
-					changeDirectionButton.setText("Change to Counterclockwise");
-					increment = -increment;
-					
-				}
-				else{
-					increment = -increment;
-					changeDirectionButton.setText("Change to Clockwise");
-				}
+		
+		class ChangeDirectionListener implements ActionListener {
+			public void actionPerformed(ActionEvent event) {
+				increment = -increment;
+				if (increment < 0) 
+					changeDirectionButton.setText("Counterclockwise");
+				else
+					changeDirectionButton.setText("Clockwise");
 			}
 		}
 		
 		ActionListener changeDirection = new ChangeDirectionListener();
-		changeDirectionButton.addActionListener(changeDirection);
-		changeDirectionButton.setBounds(500, 0, 200, 50);
-		myFrame.getContentPane().add(changeDirectionButton);
-	}
-	
-	public static void makeLineColorButton(final JFrame myFrame, final RotatingLine myLine){
-		final JButton changeLineColorButton = new JButton("Change Line Color");
-		class LineColorListener implements ActionListener{
+		
+		class LineColorListener implements ActionListener {
 			Random r = new Random();
-			public void actionPerformed(ActionEvent event){
-				myLine.changeLineColor(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
+			public void actionPerformed(ActionEvent event) {
+				line.changeLineColor(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
 				myFrame.repaint();
 			}
 		}
+		
 		ActionListener changeLineColor = new LineColorListener();
+		
+		class BackgroundColorListener implements ActionListener {
+			Random r2 = new Random();
+			public void actionPerformed(ActionEvent event) {
+				line.changeBackgroundColor(new Color(r2.nextInt(255), r2.nextInt(255), r2.nextInt(255)));
+				myFrame.repaint();
+			}	
+		}
+		
+		ActionListener changeBackgroundColor = new BackgroundColorListener();
+		
+		class DefaultColorListener implements ActionListener {
+			public void actionPerformed(ActionEvent event) {
+				line.changeBackgroundColor(Color.BLACK);
+				line.changeLineColor(Color.WHITE);
+				
+				myFrame.repaint();
+			}
+		}
+		
+		ActionListener defaultReturn = new DefaultColorListener();
+		
+		startStopButton.addActionListener(startStop);
+		startStopButton.setBounds(0, 0, 150, 50);
 		changeLineColorButton.addActionListener(changeLineColor);
 		changeLineColorButton.setBounds(150, 0, 150, 50);
-		myFrame.getContentPane().add(changeLineColorButton);
-		
-	}
-	
-	public static void makeBackgroundColorButton(final JFrame myFrame, final RotatingLine myLine){
-		final JButton changeBackgroundColorButton = new JButton("Change Background Color");
-		class BackgroundColorListener implements ActionListener{
-			Random r = new Random();
-			public void actionPerformed(ActionEvent event){
-				myLine.changeBackgroundColor(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
-				myFrame.repaint();
-			}
-			
-		}
-		ActionListener changeBackgroundColor = new BackgroundColorListener();
 		changeBackgroundColorButton.addActionListener(changeBackgroundColor);
 		changeBackgroundColorButton.setBounds(300, 0, 200, 50);
-		myFrame.getContentPane().add(changeBackgroundColorButton);
-		
-		
-	}
-	
-	public static void makeDefaultColorsButton(final JFrame myFrame, final RotatingLine myLine){
-		final JButton defaultColors = new JButton("Default Colors");
-		class DefaultColorListener implements ActionListener{
-			public void actionPerformed(ActionEvent event) {
-				myLine.changeBackgroundColor(Color.BLACK);
-				myLine.changeLineColor(Color.WHITE);
-				myFrame.repaint();
-			}
-		}
-		ActionListener defaultReturn = new DefaultColorListener();
+		changeDirectionButton.addActionListener(changeDirection);
+		changeDirectionButton.setBounds(500, 0, 200, 50);
 		defaultColors.addActionListener(defaultReturn);
 		defaultColors.setBounds(700, 0, 200, 50);
-		myFrame.getContentPane().add(defaultColors);
-		
-	}
-	public static void setUp(){
-		
-		final JFrame myFrame = makeFrame();
-		final RotatingLine line = new RotatingLine(myFrame);
-		makeStartStopButton(myFrame, line);
-		makeChangeDirectionButton(myFrame, line);
-		makeLineColorButton(myFrame, line);
-		makeBackgroundColorButton(myFrame, line);
-		makeDefaultColorsButton(myFrame, line);
-
 		myFrame.getContentPane().setLayout(new BorderLayout());
+		myFrame.getContentPane().add(startStopButton);
+		myFrame.getContentPane().add(changeLineColorButton);
+		myFrame.getContentPane().add(changeBackgroundColorButton);
+		myFrame.getContentPane().add(changeDirectionButton);
+		myFrame.getContentPane().add(defaultColors);
 		myFrame.getContentPane().add(line);
 		myFrame.setVisible(true);
 		
 	}
 	
-	public static void main(String[]args){
+	public static void main(String[]args) {
 		setUp();
-	}
-	
-		
+	}	
 }
