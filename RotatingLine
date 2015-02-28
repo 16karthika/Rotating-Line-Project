@@ -8,80 +8,120 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
+/*
+ * Akshay Karthik and Jacquelyn Roberge, Period 5
+ * 
+ * Creates a visual representation of a Line object as a component that can be placed on a frame. The line is redrawn
+ * based on the current angle of the line whenever the RotatingLine is repainted. In addition to paintComponent,
+ * methods can change the color of the background or the color of the Line as well as rotate the Line.
+ */
+
 public class RotatingLine extends JComponent {
-	
+
 	private static final Line line = new Line();
 	private JFrame frame;
 	private Color lineColor = Color.WHITE;
 	private Color backgroundColor = Color.BLACK;
-	
+
+	// Creates a RotatingLine object that sets the private JFrame to the given
+	// JFrame.
+
 	public RotatingLine(JFrame frame) {
 		this.frame = frame;
 	}
 
+	// Changes the color with which the RotatingLine will be drawn onto the
+	// contentPane.
+
 	public void changeLineColor(Color lineColor) {
 		this.lineColor = lineColor;
 	}
-	
+
+	// Changes the background color that Graphics will use when drawing the
+	// RotatingLine.
+
 	public void changeBackgroundColor(Color backgroundColor) {
 		this.backgroundColor = backgroundColor;
 	}
-	
+
+	// Paints the line onto the JFrame, using the drawLine method in Graphics2D
+	// to redraw the line based on its current rotation angle.
+
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-		
+
 		g2.setBackground(backgroundColor);
 		g2.setColor(lineColor);
 		g2.setStroke(new BasicStroke(8));
-		g2.clearRect(0, 0, frame.getContentPane().getWidth(), frame.getContentPane().getHeight());
-		
-		double smallerAngle = line.getAngle() % Math.PI; // Convert the line's rotation into something less than pi radians
+		g2.clearRect(0, 0, frame.getContentPane().getWidth(), frame
+				.getContentPane().getHeight());
+
+		double smallerAngle = line.getAngle() % Math.PI; // Convert the line's
+															// rotation into
+															// something less
+															// than pi radians
 		int centerX = frame.getContentPane().getWidth() / 2;
 		int centerY = frame.getContentPane().getHeight() / 2;
-		
+
 		if (smallerAngle >= 0 && smallerAngle < Math.PI / 4) {
-			g2.drawLine((int) (centerX - centerY * Math.tan(smallerAngle)), 0, centerX, centerY);
-			g2.drawLine(centerX, centerY, (int) (centerX + centerY * Math.tan(smallerAngle)), 2 * centerY);
-		} else if (smallerAngle == Math.PI / 4) 
+			g2.drawLine((int) (centerX - centerY * Math.tan(smallerAngle)), 0,
+					centerX, centerY);
+			g2.drawLine(centerX, centerY,
+					(int) (centerX + centerY * Math.tan(smallerAngle)),
+					2 * centerY);
+		} else if (smallerAngle == Math.PI / 4)
 			g2.drawLine(0, 0, 2 * centerX, 2 * centerY);
-		  else if (smallerAngle > Math.PI / 4 && smallerAngle < 3 * Math.PI / 4) {
+		else if (smallerAngle > Math.PI / 4 && smallerAngle < 3 * Math.PI / 4) {
 			double complement = Math.PI / 2 - smallerAngle;
-			g2.drawLine(0, (int) (centerY - centerX * Math.tan(complement)), centerX, centerY);
-			g2.drawLine(centerX, centerY, 2 * centerX, (int) (frame.getContentPane().getHeight() - centerY + centerX * Math.tan(complement)));
-		} else if (smallerAngle == 3 * Math.PI / 4) 
+			g2.drawLine(0, (int) (centerY - centerX * Math.tan(complement)),
+					centerX, centerY);
+			g2.drawLine(
+					centerX,
+					centerY,
+					2 * centerX,
+					(int) (frame.getContentPane().getHeight() - centerY + centerX
+							* Math.tan(complement)));
+		} else if (smallerAngle == 3 * Math.PI / 4)
 			g2.drawLine(0, 2 * centerY, 2 * centerX, 0);
-		  else {
+		else {
 			double supplement = Math.PI - smallerAngle;
-			g2.drawLine((int) (centerX - centerY * Math.tan(supplement)), 2 * centerY, centerX, centerY);
-			g2.drawLine(centerX, centerY, (int) (centerX + centerY * Math.tan(supplement)), 0);
-		}	
+			g2.drawLine((int) (centerX - centerY * Math.tan(supplement)),
+					2 * centerY, centerX, centerY);
+			g2.drawLine(centerX, centerY,
+					(int) (centerX + centerY * Math.tan(supplement)), 0);
+		}
 	}
-	
+
+	// Rotates the Line by the given angle, and repaints the component to
+	// reflect that change.
+
 	public void rotate(double angle) {
 		line.rotate(angle);
 		repaint();
 	}
-		
+	
+	// Tests the fuctionality of the RotatingLine class.
+	
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		final RotatingLine line = new RotatingLine(frame);
 		frame.add(line);
-		
+
 		class TimerListener implements ActionListener {
 			public void actionPerformed(ActionEvent event) {
 				line.rotate(0.02);
 			}
 		}
-		
+
 		frame.setSize(1000, 1000);
 		frame.setTitle("Rotating Line Project");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		
+
 		ActionListener listener = new TimerListener();
-		
+
 		final int DELAY = 30;
 		Timer t = new Timer(DELAY, listener);
 		t.start();
-	}	
+	}
 }
