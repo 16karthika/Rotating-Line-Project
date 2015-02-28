@@ -1,25 +1,43 @@
+/*
+ * Akshay Karthik and Jacquelyn Roberge, Period 5
+ * 
+ * Creates a line object that holds an angle at which it is rotated.
+ * Methods can construct a Line object, get and set the angle value and rotate the line by a certain angle.
+ * All angle measures are considered in radians.
+ */
+
 public class Line {
-	
+
 	private double angle;
+	
+	// Ctor for a Line given a starting angle of rotation.
 	
 	public Line(double angle) {
 		this.angle = angle;
 	}
 	
+	// Default Ctor for a Line, setting the angle to 0.
+	
 	public Line() {
 		angle = 0;
 	}
 
+	// Returns the current value of the rotation angle of the line.
+	
 	public double getAngle() {
 		return angle;
 	}
 
+	// Changes the value of the rotation angle to the given value (returns nothing).
+	
 	public void setAngle(double angle) {
 		this.angle = angle;
 	}
+
+	// Adds the given angle measure to the current rotation angle of the Line.
 	
 	public void rotate(double angle) {
 		this.angle += angle;
 	}
-
+	
 }
