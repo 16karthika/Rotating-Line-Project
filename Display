@@ -1,3 +1,6 @@
+/*
+ * Imports to be used for displaying the RotatingLine
+ */
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -7,19 +10,60 @@ import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.Timer;
-
+/*
+ * Jacquelyn Roberge and Akshay Karthik, Period 5
+ * 
+ * Class Display creates a JFrame which displays the RotatingLine and various JButtons
+ * that can start/stop the rotation, change the rotation direction, and change the 
+ * colors of the line and background.
+ */
 public class Display {
+	/*
+	 * Private Data
+	 * double increment = the speed at which the line rotates
+	 */
 	private static double increment = -.04;
-	
+	/*
+	 * Method: 
+	 * makeJFrame
+	 * 
+	 * Parameters: 
+	 * none
+	 * 
+	 * Purpose: creates a JFrame that the JButtons and RotatingLine will be added to.
+	 * This method sets the title, sets the frame to close, and sets minimum dimensions.
+	 * 
+	 * Returns:
+	 * the JFrame that is created
+	 * 
+	 */
 	public static JFrame makeFrame() {
 		final JFrame frame = new JFrame();	
 		frame.setTitle("Rotating Line");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setMinimumSize(new Dimension(900, 900));
+		frame.setMinimumSize(new Dimension(900, 600));
 		return frame;
 	}
 	
-	
+	/*
+	 * Method: 
+	 * makeStartStopButton
+	 * 
+	 * Parameters: 
+	 * final JFrame myFrame = the JFrame that the button will be added to
+	 * final RotatingLine myLine = the RotatingLine that is used in changing elements 
+	 * of the line
+	 * 
+	 * Purpose:
+	 * Creates a JButton that starts and stops the RotatingLine. This method uses
+	 * inner classes to implement ActionListeners. The button says Start and then changes
+	 * to Stop when clicked and when it starts, the timer is started. When stopped, the timer
+	 * is stopped, which causes the line to stop rotating. The button is then added to myFrame.
+	 * 
+	 * Returns:
+	 * nothing
+	 * 
+	 */
 	public static void makeStartStopButton(final JFrame myFrame, final RotatingLine myLine) {
 		final JButton startStopButton = new JButton("Start");
 		
@@ -51,7 +95,26 @@ public class Display {
 		myFrame.getContentPane().add(startStopButton);	
 	}
 	
-	
+	/*
+	 * Method: 
+	 * makeChangeDirectionButton
+	 * 
+	 * Parameters:
+	 * final JFrame myFrame = the JFrame that the button will be added to
+	 * final RotatingLine myLine = the RotatingLine that is used in changing elements 
+	 * of the line
+	 * 
+	 * Purpose:
+	 * Creates a JButton that changed the rotation direction of the RotatingLine. This method 
+	 * uses inner classes to implement ActionListeners. When the button is clicked, the increment
+	 * is changed to negative increment which changes the direction. The line starts out rotating clockwise
+	 * so the button changes from Counterclockwise to Clockwise when clicked, and back to Counterclockwise
+	 * when clicked again. The button is then added to myFrame.
+	 * 
+	 * Returns:
+	 * nothing
+	 * 
+	 */
 	public static void makeChangeDirectionButton(final JFrame myFrame, final RotatingLine myLine) {
 		final JButton changeDirectionButton = new JButton("Counterclockwise");
 		class ChangeDirectionListener implements ActionListener {
@@ -69,7 +132,26 @@ public class Display {
 		changeDirectionButton.setBounds(500, 0, 200, 50);
 		myFrame.getContentPane().add(changeDirectionButton);
 	}
-	
+	/*
+	 * Method: 
+	 * makeLineColorButton
+	 * 
+	 * Parameters:
+	 * final JFrame myFrame = the JFrame that the button will be added to
+	 * final RotatingLine myLine = the RotatingLine that is used in changing elements 
+	 * of the line
+	 * 
+	 * Purpose:
+	 * Creates a JButton that changes the color of the RotatingLine. This method uses
+	 * inner classes to implement ActionListeners. The button says Change Line Color. Using
+	 * a random number, the color of the line is randomly changed when the button is clicked. 
+	 * The frame is repainted in the new color each time the button is clicked. The button is 
+	 * then added to myFrame.
+	 * 
+	 * Returns:
+	 * nothing
+	 * 
+	 */
 	public static void makeLineColorButton(final JFrame myFrame, final RotatingLine myLine) {
 		final JButton changeLineColorButton = new JButton("Change Line Color");
 		class LineColorListener implements ActionListener {
@@ -85,7 +167,25 @@ public class Display {
 		changeLineColorButton.setBounds(150, 0, 150, 50);
 		myFrame.getContentPane().add(changeLineColorButton);
 	}
-	
+	/*
+	 * Method: makeBackgroundColorButton
+	 * 
+	 * Parameters:
+	 * final JFrame myFrame = the JFrame that the button will be added to
+	 * final RotatingLine myLine = the RotatingLine that is used in changing elements 
+	 * of the line
+	 * 
+	 * Purpose:
+	 * Creates a JButton that changes the color of background of the RotatingLine. This method 
+	 * uses inner classes to implement ActionListeners. The button says Change Background Color. Using
+	 * a random number, the color of the line is randomly changed when the button is clicked. 
+	 * The frame is repainted in the new color each time the button is clicked. The button is 
+	 * then added to myFrame.
+	 * 
+	 * Returns:
+	 * nothing
+	 * 
+	 */
 	public static void makeBackgroundColorButton(final JFrame myFrame, final RotatingLine myLine) {
 		final JButton changeBackgroundColorButton = new JButton("Change Background Color");
 		class BackgroundColorListener implements ActionListener {
@@ -101,6 +201,24 @@ public class Display {
 		changeBackgroundColorButton.setBounds(300, 0, 200, 50);
 		myFrame.getContentPane().add(changeBackgroundColorButton);
 	}
+	/*
+	 * Method: makeDefaultColorsButton
+	 * 
+	 * Parameters:
+	 * final JFrame myFrame = the JFrame that the button will be added to
+	 * final RotatingLine myLine = the RotatingLine that is used in changing elements 
+	 * of the line
+	 * 
+	 * Purpose:
+	 * Creates a JButton that changes the color of background of the RotatingLine to the original color:
+	 * black, and the line color to white. This method uses inner classes to implement ActionListeners. 
+	 * The button says Default Colors. The frame is repainted each time the button is clicked. 
+	 * The button is then added to myFrame.
+	 * 
+	 * Returns:
+	 * nothing
+	 * 
+	 */
 	
 	public static void makeDefaultColorsButton(final JFrame myFrame, final RotatingLine myLine) {
 		final JButton defaultColors = new JButton("Default Colors");
@@ -117,7 +235,20 @@ public class Display {
 		defaultColors.setBounds(700, 0, 200, 50);
 		myFrame.getContentPane().add(defaultColors);	
 	}
-
+	/*
+	 * Method: setUp
+	 * 
+	 * Parameters: none
+	 * 
+	 * Purpose:
+	 * This method calls all the methods that make the buttons and passes the parameters of
+	 * myFrame and line based on the JFrame myFrame it makes and the RotatingLine line it makes.
+	 * The RotatingLine is added to the JFrame and the JFrame is set visible.
+	 * 
+	 * Returns:
+	 * nothing
+	 * 
+	 */
 	public static void setUp() {
 		final JFrame myFrame = makeFrame();
 		final RotatingLine line = new RotatingLine(myFrame);
@@ -131,7 +262,16 @@ public class Display {
 		myFrame.getContentPane().add(line);
 		myFrame.setVisible(true);	
 	}
-	
+	/*
+	 * Method: main
+	 * 
+	 * Purpose:
+	 * calls setUp() which creates a JFrame and all the buttons and RotatingLine.
+	 * 
+	 * Returns:
+	 * nothing
+	 * 
+	 */
 	public static void main(String[]args) {
 		setUp();
 	}	
