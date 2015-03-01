@@ -13,13 +13,15 @@ import javax.swing.Timer;
 /*
  * Jacquelyn Roberge and Akshay Karthik, Period 5
  * 
- * Class Display creates a JFrame which displays the RotatingLine and various JButtons
+ * Class Display 
+ * 	creates a JFrame which displays the RotatingLine and various JButtons
  * that can start/stop the rotation, change the rotation direction, and change the 
  * colors of the line and background.
  */
 public class Display {
 	/*
-	 * Private Data
+	 * Private Data:
+	 * 
 	 * double increment = the speed at which the line rotates
 	 */
 	private static double increment = -.04;
@@ -168,7 +170,8 @@ public class Display {
 		myFrame.getContentPane().add(changeLineColorButton);
 	}
 	/*
-	 * Method: makeBackgroundColorButton
+	 * Method: 
+	 * makeBackgroundColorButton
 	 * 
 	 * Parameters:
 	 * final JFrame myFrame = the JFrame that the button will be added to
@@ -202,7 +205,8 @@ public class Display {
 		myFrame.getContentPane().add(changeBackgroundColorButton);
 	}
 	/*
-	 * Method: makeDefaultColorsButton
+	 * Method: 
+	 * makeDefaultColorsButton
 	 * 
 	 * Parameters:
 	 * final JFrame myFrame = the JFrame that the button will be added to
@@ -236,9 +240,11 @@ public class Display {
 		myFrame.getContentPane().add(defaultColors);	
 	}
 	/*
-	 * Method: setUp
+	 * Method: 
+	 * setUp
 	 * 
-	 * Parameters: none
+	 * Parameters:
+	 * none
 	 * 
 	 * Purpose:
 	 * This method calls all the methods that make the buttons and passes the parameters of
@@ -263,7 +269,8 @@ public class Display {
 		myFrame.setVisible(true);	
 	}
 	/*
-	 * Method: main
+	 * Method: 
+	 * main
 	 * 
 	 * Purpose:
 	 * calls setUp() which creates a JFrame and all the buttons and RotatingLine.
