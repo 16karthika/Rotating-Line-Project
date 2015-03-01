@@ -178,7 +178,7 @@ public class Display {
 	 * Purpose:
 	 * Creates a JButton that changes the color of background of the RotatingLine. This method 
 	 * uses inner classes to implement ActionListeners. The button says Change Background Color. Using
-	 * a random number, the color of the line is randomly changed when the button is clicked. 
+	 * a random number, the color of the background is randomly changed when the button is clicked. 
 	 * The frame is repainted in the new color each time the button is clicked. The button is 
 	 * then added to myFrame.
 	 * 
