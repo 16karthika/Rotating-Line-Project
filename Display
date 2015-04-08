@@ -20,7 +20,8 @@ import javax.swing.event.MenuDragMouseListener;
 
 
 public class Display {
-	
+	//we should create a toolbar for the buttons at the top of the game
+	//set a maximum size to the screen so the screen cannot be resized
 	public static JFrame makeFrame(int width, int height) {
 		final JFrame frame = new JFrame();	
 		frame.setTitle("Puzzle");
@@ -42,7 +43,7 @@ public class Display {
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets(0, 0, 50, 0);
+		c.insets = new Insets(10, 10, 10,10);
 	//	c.anchor = GridBagConstraints.LAST_LINE_END;
 		panel.add(restartButton, c);
 		
@@ -71,7 +72,7 @@ public class Display {
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 1;
 		c.gridy = 0;
-		c.insets = new Insets(0, 0, 50, 0);
+		c.insets = new Insets(10,10, 10, 10);
 	//	c.anchor = GridBagConstraints.EAST;
 		panel.add(solveButton,c);	
 	}
