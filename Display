@@ -1,285 +1,163 @@
-/*
- * Imports to be used for displaying the RotatingLine
- */
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionAdapter;
+
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.Timer;
-/*
- * Jacquelyn Roberge and Akshay Karthik, Period 5
- * 
- * Class Display 
- * 	creates a JFrame which displays the RotatingLine and various JButtons
- * that can start/stop the rotation, change the rotation direction, and change the 
- * colors of the line and background.
- */
+import javax.swing.JPanel;
+import javax.swing.event.MenuDragMouseListener;
+
+
 public class Display {
-	/*
-	 * Private Data:
-	 * 
-	 * double increment = the speed at which the line rotates
-	 */
-	private static double increment = -.04;
-	/*
-	 * Method: 
-	 * makeJFrame
-	 * 
-	 * Parameters: 
-	 * none
-	 * 
-	 * Purpose: creates a JFrame that the JButtons and RotatingLine will be added to.
-	 * This method sets the title, sets the frame to close, and sets minimum dimensions.
-	 * 
-	 * Returns:
-	 * the JFrame that is created
-	 * 
-	 */
-	public static JFrame makeFrame() {
+	
+	public static JFrame makeFrame(int width, int height) {
 		final JFrame frame = new JFrame();	
-		frame.setTitle("Rotating Line");
+		frame.setTitle("Puzzle");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setMinimumSize(new Dimension(900, 600));
+		frame.setMinimumSize(new Dimension(600, 600));
+		frame.setSize(width, height);
+		frame.setVisible(true);
 		return frame;
 	}
 	
-	/*
-	 * Method: 
-	 * makeStartStopButton
-	 * 
-	 * Parameters: 
-	 * final JFrame myFrame = the JFrame that the button will be added to
-	 * final RotatingLine myLine = the RotatingLine that is used in changing elements 
-	 * of the line
-	 * 
-	 * Purpose:
-	 * Creates a JButton that starts and stops the RotatingLine. This method uses
-	 * inner classes to implement ActionListeners. The button says Start and then changes
-	 * to Stop when clicked and when it starts, the timer is started. When stopped, the timer
-	 * is stopped, which causes the line to stop rotating. The button is then added to myFrame.
-	 * 
-	 * Returns:
-	 * nothing
-	 * 
-	 */
-	public static void makeStartStopButton(final JFrame myFrame, final RotatingLine myLine) {
-		final JButton startStopButton = new JButton("Start");
+	/*public void paintComponent(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		g2.drawRect(1,1,100,100);
+	}*/
+	
+	public static void restartButton(JPanel panel) {
+		final JButton restartButton = new JButton("Restart");
 		
-		class TimerListener implements ActionListener {
-			public void actionPerformed(ActionEvent event) {
-				myLine.rotate(increment);
-			}
-		}
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		c.insets = new Insets(0, 0, 50, 0);
+	//	c.anchor = GridBagConstraints.LAST_LINE_END;
+		panel.add(restartButton, c);
 		
-		ActionListener listener = new TimerListener();
-		final int DELAY = 30; 
-		final Timer timer = new Timer(DELAY, listener);
-		
-		class StartStopListener implements ActionListener {
+		class RestartListener implements ActionListener {
 			public void actionPerformed(ActionEvent event){
-				if (startStopButton.getText().equals("Start")) {
-					startStopButton.setText("Stop");
-					timer.start();
-				} else {
-					timer.stop();
-					startStopButton.setText("Start");
-				}
+				PuzzlePanel.restart();
 			}
 		}
-		
-		ActionListener startStop = new StartStopListener();
-		startStopButton.addActionListener(startStop);
-		startStopButton.setBounds(0, 0, 150, 50);
-		myFrame.getContentPane().add(startStopButton);	
+		ActionListener restart = new RestartListener();
+		restartButton.addActionListener(restart);
+	
 	}
 	
-	/*
-	 * Method: 
-	 * makeChangeDirectionButton
-	 * 
-	 * Parameters:
-	 * final JFrame myFrame = the JFrame that the button will be added to
-	 * final RotatingLine myLine = the RotatingLine that is used in changing elements 
-	 * of the line
-	 * 
-	 * Purpose:
-	 * Creates a JButton that changed the rotation direction of the RotatingLine. This method 
-	 * uses inner classes to implement ActionListeners. When the button is clicked, the increment
-	 * is changed to negative increment which changes the direction. The line starts out rotating clockwise
-	 * so the button changes from Counterclockwise to Clockwise when clicked, and back to Counterclockwise
-	 * when clicked again. The button is then added to myFrame.
-	 * 
-	 * Returns:
-	 * nothing
-	 * 
-	 */
-	public static void makeChangeDirectionButton(final JFrame myFrame, final RotatingLine myLine) {
-		final JButton changeDirectionButton = new JButton("Counterclockwise");
-		class ChangeDirectionListener implements ActionListener {
+	public static void solveButton(JPanel panel) {
+		final JButton solveButton = new JButton("Solve");
+		
+		class SolveListener implements ActionListener {
 			public void actionPerformed(ActionEvent event){
-				increment = -increment;
-				if (increment < 0)
-					changeDirectionButton.setText("Counterclockwise");
-				else
-					changeDirectionButton.setText("Clockwise");
+				PuzzlePanel.solve();
 			}
 		}
 		
-		ActionListener changeDirection = new ChangeDirectionListener();
-		changeDirectionButton.addActionListener(changeDirection);
-		changeDirectionButton.setBounds(500, 0, 200, 50);
-		myFrame.getContentPane().add(changeDirectionButton);
+		ActionListener solve = new SolveListener();
+		solveButton.addActionListener(solve);
+	//	solveButton.setBounds(100, 0, 100, 50);
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 1;
+		c.gridy = 0;
+		c.insets = new Insets(0, 0, 50, 0);
+	//	c.anchor = GridBagConstraints.EAST;
+		panel.add(solveButton,c);	
 	}
-	/*
-	 * Method: 
-	 * makeLineColorButton
-	 * 
-	 * Parameters:
-	 * final JFrame myFrame = the JFrame that the button will be added to
-	 * final RotatingLine myLine = the RotatingLine that is used in changing elements 
-	 * of the line
-	 * 
-	 * Purpose:
-	 * Creates a JButton that changes the color of the RotatingLine. This method uses
-	 * inner classes to implement ActionListeners. The button says Change Line Color. Using
-	 * a random number, the color of the line is randomly changed when the button is clicked. 
-	 * The frame is repainted in the new color each time the button is clicked. The button is 
-	 * then added to myFrame.
-	 * 
-	 * Returns:
-	 * nothing
-	 * 
-	 */
-	public static void makeLineColorButton(final JFrame myFrame, final RotatingLine myLine) {
-		final JButton changeLineColorButton = new JButton("Change Line Color");
-		class LineColorListener implements ActionListener {
-			Random r = new Random();
-			public void actionPerformed(ActionEvent event) {
-				myLine.changeLineColor(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
-				myFrame.repaint();
-			}
-		}
-		
-		ActionListener changeLineColor = new LineColorListener();
-		changeLineColorButton.addActionListener(changeLineColor);
-		changeLineColorButton.setBounds(150, 0, 150, 50);
-		myFrame.getContentPane().add(changeLineColorButton);
-	}
-	/*
-	 * Method: 
-	 * makeBackgroundColorButton
-	 * 
-	 * Parameters:
-	 * final JFrame myFrame = the JFrame that the button will be added to
-	 * final RotatingLine myLine = the RotatingLine that is used in changing elements 
-	 * of the line
-	 * 
-	 * Purpose:
-	 * Creates a JButton that changes the color of background of the RotatingLine. This method 
-	 * uses inner classes to implement ActionListeners. The button says Change Background Color. Using
-	 * a random number, the color of the background is randomly changed when the button is clicked. 
-	 * The frame is repainted in the new color each time the button is clicked. The button is 
-	 * then added to myFrame.
-	 * 
-	 * Returns:
-	 * nothing
-	 * 
-	 */
-	public static void makeBackgroundColorButton(final JFrame myFrame, final RotatingLine myLine) {
-		final JButton changeBackgroundColorButton = new JButton("Change Background Color");
-		class BackgroundColorListener implements ActionListener {
-			Random r = new Random();
-			public void actionPerformed(ActionEvent event) {
-				myLine.changeBackgroundColor(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
-				myFrame.repaint();
-			}
-		}
-		
-		ActionListener changeBackgroundColor = new BackgroundColorListener();
-		changeBackgroundColorButton.addActionListener(changeBackgroundColor);
-		changeBackgroundColorButton.setBounds(300, 0, 200, 50);
-		myFrame.getContentPane().add(changeBackgroundColorButton);
-	}
-	/*
-	 * Method: 
-	 * makeDefaultColorsButton
-	 * 
-	 * Parameters:
-	 * final JFrame myFrame = the JFrame that the button will be added to
-	 * final RotatingLine myLine = the RotatingLine that is used in changing elements 
-	 * of the line
-	 * 
-	 * Purpose:
-	 * Creates a JButton that changes the color of background of the RotatingLine to the original color:
-	 * black, and the line color to white. This method uses inner classes to implement ActionListeners. 
-	 * The button says Default Colors. The frame is repainted each time the button is clicked. 
-	 * The button is then added to myFrame.
-	 * 
-	 * Returns:
-	 * nothing
-	 * 
-	 */
 	
-	public static void makeDefaultColorsButton(final JFrame myFrame, final RotatingLine myLine) {
-		final JButton defaultColors = new JButton("Default Colors");
-		class DefaultColorListener implements ActionListener {
-			public void actionPerformed(ActionEvent event) {
-				myLine.changeBackgroundColor(Color.BLACK);
-				myLine.changeLineColor(Color.WHITE);
-				myFrame.repaint();
+	public static void rotateButton(JPanel panel, final Piece piece) {
+		final JButton rotateButton = new JButton("Rotate Right");
+		
+		class PieceListener implements ActionListener {
+			public void actionPerformed(ActionEvent event){
+				PieceComponent.rotate(piece, 1);
 			}
 		}
 		
-		ActionListener defaultReturn = new DefaultColorListener();
-		defaultColors.addActionListener(defaultReturn);
-		defaultColors.setBounds(700, 0, 200, 50);
-		myFrame.getContentPane().add(defaultColors);	
+		ActionListener rotate = new PieceListener();
+		rotateButton.addActionListener(rotate);
+	//	solveButton.setBounds(100, 0, 100, 50);
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 1;
+		c.gridy = 0;
+		c.insets = new Insets(0, 0, 50, 0);
+	//	c.anchor = GridBagConstraints.EAST;
+		panel.add(rotateButton,c);	
 	}
-	/*
-	 * Method: 
-	 * setUp
-	 * 
-	 * Parameters:
-	 * none
-	 * 
-	 * Purpose:
-	 * This method calls all the methods that make the buttons and passes the parameters of
-	 * myFrame and line based on the JFrame myFrame it makes and the RotatingLine line it makes.
-	 * The RotatingLine is added to the JFrame and the JFrame is set visible.
-	 * 
-	 * Returns:
-	 * nothing
-	 * 
-	 */
-	public static void setUp() {
-		final JFrame myFrame = makeFrame();
-		final RotatingLine line = new RotatingLine(myFrame);
-		makeStartStopButton(myFrame, line);
-		makeChangeDirectionButton(myFrame, line);
-		makeLineColorButton(myFrame, line);
-		makeBackgroundColorButton(myFrame, line);
-		makeDefaultColorsButton(myFrame, line);
+	
+	public static void addBoard(JPanel panel) {
 		
-		myFrame.getContentPane().setLayout(new BorderLayout());
-		myFrame.getContentPane().add(line);
-		myFrame.setVisible(true);	
+		final JPanel board=new JPanel(new GridBagLayout()); //layout??
+	
+		board.setBackground(Color.blue);
+		board.setVisible(true);
+		
+		GridBagConstraints c = new GridBagConstraints();
+//		c.gridwidth=2;
+//		c.gridheight=2;
+//		c.gridx = 3;
+//		c.gridy = 0;
+		c.insets = new Insets(10, 10, 10,10);
+//		c.fill = GridBagConstraints.BOTH;
+	//	c.anchor = GridBagConstraints.EAST;
+		panel.add(board);
+		
+		//drag listener?
+	
 	}
-	/*
-	 * Method: 
-	 * main
-	 * 
-	 * Purpose:
-	 * calls setUp() which creates a JFrame and all the buttons and RotatingLine.
-	 * 
-	 * Returns:
-	 * nothing
-	 * 
-	 */
-	public static void main(String[]args) {
-		setUp();
-	}	
+	
+	public static void addPieces(JPanel panel) {
+		
+			final JPanel pieces=new JPanel(); //layout??
+	
+			pieces.setBounds(0, 0, 200, 300);
+		//	pieces.setSize(100, 300);
+			pieces.setBackground(Color.blue);
+			pieces.setVisible(true);
+			
+			GridBagConstraints c = new GridBagConstraints();
+			//	c.gridwidth=3;
+			//	c.gridheight=6;
+		//	c.gridx = 0;
+			//c.gridy = 0;
+			c.insets = new Insets(10, 10, 10, 10);
+		//	c.fill = GridBagConstraints.BOTH;
+		//	c.anchor = GridBagConstraints.EAST;
+			panel.add(pieces);
+			
+			//drag listener?
+		
+		}
+	
+	public static void main(String[] args){
+		final JFrame frame = makeFrame(600,600);
+		final GridComponent g = new GridComponent();
+		final JPanel panel = new JPanel(new GridBagLayout());
+		//final JPanel panel1= new JPanel(new GridBagLayout());
+		frame.add(g);
+		frame.add(panel,BorderLayout.NORTH);
+		//frame.add(panel,BorderLayout.EAST);
+		
+	
+		panel.setVisible(true);
+		restartButton(panel);
+		solveButton(panel);
+	//	addBoard(panel);
+	//	addPieces(panel);	
+		
+		
+	}
 }
+
+	           
